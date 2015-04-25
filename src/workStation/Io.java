@@ -11,7 +11,7 @@ package workStation;
 public class Io {
     private int momento;
     
-    public void Io(int _momento){
+    public Io(int _momento){
         setMomento(_momento);
     }
 

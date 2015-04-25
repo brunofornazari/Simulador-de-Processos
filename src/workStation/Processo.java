@@ -8,16 +8,33 @@ public class Processo {
     private int chegada;
     private ArrayList<Io> io;
     
-    public void Processo(int _duracao, int _chegada, ArrayList<Io> _io, int _pId){
-        setDuracao(_duracao);
-        setChegada(_chegada);
-        setIo(_io);
-        setpId(_pId);
+    public Processo(int _duracao, int _chegada, ArrayList<Io> _io, int _pId){
+        pId = _pId;
+        duracao = _duracao;
+        chegada = _chegada;
+        io = _io;
+    }
+    
+    public Processo(int _duracao, int _chegada, int _pId){
+        pId = _pId;
+        duracao = _duracao;
+        chegada = _chegada;
+        io = new ArrayList<>();
     }
     
     public boolean addIO(Io quando){
         if(quando.getMomento() <= duracao){
             io.add(quando);
+            return true;
+        } else {
+            return false;
+        }
+    }
+    
+    public boolean addIO(int quando){
+        if(quando <= duracao){
+            Io _io = new Io(quando);
+            io.add(_io);
             return true;
         } else {
             return false;
