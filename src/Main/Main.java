@@ -48,13 +48,23 @@ public class Main {
                                    JOptionPane.showMessageDialog(null, retornarIOs(p));
                                    break;
                                case 3:
-                                   int chave = Integer.parseInt(JOptionPane.showInputDialog("Entre com o número da chave do I/O que deseja eliminar"));
-                                   Io o = p.getIo().remove(chave);
-                                   if(o != null){
-                                       JOptionPane.showMessageDialog(null, "Chave " + chave + " - (Momento" + o.getMomento() + ") eliminada com sucesso!");
+                                   if(p.getIo().isEmpty()){
+                                       JOptionPane.showMessageDialog(null, "Não é possível remover, pois há nenhum processo de IO registrado no processo P" + p.getpId());
                                    } else {
-                                       JOptionPane.showMessageDialog(null, "Não foi possível remover o momento indicado, ou a chave é falsa ou o momento já foi eliminado!");
+                                       int chave = Integer.parseInt(JOptionPane.showInputDialog("Entre com o número da chave do I/O que deseja eliminar"));
+                                       Io o;
+                                       if(chave < p.getIo().size() && chave >= 0){
+                                           o = p.getIo().remove(chave);
+                                       } else {
+                                           o = null;
+                                       }
+                                        if(o != null){
+                                            JOptionPane.showMessageDialog(null, "Chave " + chave + " - (Momento" + o.getMomento() + ") eliminada com sucesso!");
+                                        } else {
+                                            JOptionPane.showMessageDialog(null, "Não foi possível remover o momento indicado, ou a chave é falsa ou o momento já foi eliminado!");
+                                        }
                                    }
+                                   
                                    break;
                                case 4:
                                    //Alterar processo, criar método para evitar alongar demais o código
@@ -98,18 +108,28 @@ public class Main {
     
     public static String retornarIOs(Processo p){
         String ios = "Processo P" + p.getpId() + "\n";
-        for(Io o:p.getIo()){
-           ios += "Momento " + p.getIo().indexOf(o) +": " + o.getMomento() + "\n";
+        if(!p.getIo().isEmpty()){
+            for(Io o:p.getIo()){
+                ios += "Momento " + p.getIo().indexOf(o) +": " + o.getMomento() + "\n";
+             }
+        } else {
+            ios += "Nenhum processo de IO encontrado no processo P" + p.getpId();
         }
+        
         return ios;
     }
     public static String retornarIOs(ArrayList<Io> io){
         String ios = "";
-        for(Io o:io){
-           ios += o.getMomento();
-           if(io.indexOf(o) != (io.size()-1)){
-               ios += ", ";
-           }
+        if(!io.isEmpty()){
+            for(Io o:io){
+               ios += o.getMomento();
+               if(io.indexOf(o) != (io.size()-1)){
+                   ios += ", ";
+               }
+               ios += "\n";
+            }
+        } else {
+           ios += "Nenhum processo de IO encontrado no processo.";
         }
         return ios;
     }
