@@ -23,7 +23,7 @@ public class Processo {
     }
     
     public boolean addIO(Io quando){
-        if(quando.getMomento() <= duracao){
+        if(quando.getMomento() <= duracao && quando.getMomento() >= chegada){
             io.add(quando);
             return true;
         } else {
@@ -32,7 +32,7 @@ public class Processo {
     }
     
     public boolean addIO(int quando){
-        if(quando <= duracao){
+        if(quando <= duracao && quando >= chegada){
             Io _io = new Io(quando);
             io.add(_io);
             return true;

@@ -73,7 +73,7 @@ public class Main {
                     for(Processo processo:fila){
                         processos += "Processo: P" + processo.getpId() + "\n"
                                 + "Duração: [" + processo.getDuracao() + "] - Chegada: [" + processo.getChegada() + "]\n"
-                                + "I/O's: " + retornarIOs(processo);
+                                + "I/O's: " + retornarIOs(processo.getIo());
                     }
                     JOptionPane.showMessageDialog(null, processos);
                     break;
