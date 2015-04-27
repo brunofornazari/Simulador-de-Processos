@@ -6,7 +6,7 @@ import javax.swing.JOptionPane;
 public class Main {
     static ArrayList<Processo> fila = new ArrayList<Processo>();
     static int quantum;
-    //ArrayList<int> gant = new ArrayList<int>();
+    static ArrayList<Processo> ready = new ArrayList<Processo>();
     public static void main(String[] args) {
         int menu = 0;
         int contP = 0;
@@ -64,7 +64,6 @@ public class Main {
                                             JOptionPane.showMessageDialog(null, "Não foi possível remover o momento indicado, ou a chave é falsa ou o momento já foi eliminado!");
                                         }
                                    }
-                                   
                                    break;
                                case 4:
                                    //Alterar processo, criar método para evitar alongar demais o código
@@ -97,7 +96,26 @@ public class Main {
                     //Alterar quantum
                     break;
                 case 6:
-                    //Simulação
+                    ready = fila;
+                    if(ready.isEmpty()){
+                        JOptionPane.showMessageDialog(null, "Não há processos para serem simulados!\nAdicione processos e tente novamente.");
+                    } else {
+                        gnomeSort(ready, 0, 0, true);
+                        int ponteiro = 0, tempo = 0;
+                        while(ready != null){
+                            if(ponteiro > ready.size()-1){
+                                ponteiro = 0;
+                            }
+                            p = ready.get(ponteiro);
+                            if(p.getChegada() >= tempo && p.getChegada() <= (tempo+quantum)){
+                                System.out.println("Iniciando em: " + (tempo+p.getChegada()));
+                                int momento = getMomentoIos(p.getIo(), tempo, quantum);
+                                if(momento >= 0){
+                                    tempo = tempo + momento/8;
+                                }
+                            }
+                        }
+                    }
                     break;
                 case 7:
                     System.exit(0);
@@ -118,6 +136,16 @@ public class Main {
         
         return ios;
     }
+    
+    public static int getMomentoIos(ArrayList<Io> lista, int tempo, int quantum){
+        for(Io io:lista){
+            if(io.getMomento() >= tempo && io.getMomento() <= tempo+quantum){
+                return io.getMomento();
+            }
+        }
+        return -1;
+    }
+    
     public static String retornarIOs(ArrayList<Io> io){
         String ios = "";
         if(!io.isEmpty()){
@@ -134,6 +162,30 @@ public class Main {
         return ios;
     }
     
+    public static ArrayList<Processo> gnomeSort(ArrayList<Processo> v, int ponteiro, int var, boolean progresso) {
+        if(ponteiro >= v.size()-1){
+            return v;
+        } else {
+            if(progresso){
+                if(v.get(ponteiro).getChegada() > v.get(ponteiro+1).getChegada() || ((v.get(ponteiro).getChegada() == v.get(ponteiro+1).getChegada()) && v.get(ponteiro).getDuracao() > v.get(ponteiro+1).getDuracao())){
+                    Processo x = v.get(ponteiro);
+                    v.set(ponteiro, v.get(ponteiro+1));
+                    v.set(ponteiro+1, x);
+                    return gnomeSort(v, ponteiro, ponteiro, false);
+                } 
+            } else {
+                if(var > 0){
+                    if(v.get(var).getChegada() < v.get(var-1).getChegada()){
+                        Processo x = v.get(var-1);
+                        v.set(var, v.get(var-1));
+                        v.set(var-1, x);
+                        return gnomeSort(v, ponteiro, var-1, false);
+                    }
+                }
+            }
+            return gnomeSort(v, ponteiro+1, ponteiro+1, true);
+        }
+    }
     
     public static void novoProcesso(Processo p){
         fila.add(p);
