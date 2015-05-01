@@ -8,13 +8,23 @@ package workStation;
  *
  * @author Bruno
  */
-public class Io {
+public class Io implements Cloneable {
     private int momento;
     
     public Io(int _momento){
         setMomento(_momento);
     }
-
+    
+    @Override
+    public Io clone(){
+        try{
+            return (Io) super.clone();
+        } catch(CloneNotSupportedException e){
+            System.out.println("Erro ao clonar objeto");
+            return this;
+        }
+    }
+    
     /**
      * @return the momento
      */

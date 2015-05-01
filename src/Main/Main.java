@@ -1,6 +1,7 @@
 package Main;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import workStation.*;
 import javax.swing.JOptionPane;
 public class Main {
@@ -9,9 +10,18 @@ public class Main {
     static ArrayList<Processo> ready = new ArrayList<Processo>();
     public static void main(String[] args) {
         int menu = 0;
-        int contP = 0;
+        int contP = 3;
         Processo p;
         quantum = Integer.parseInt(JOptionPane.showInputDialog("Entre com o valor do Quantum"));
+        //Pacote de inicialiazção direta
+        novoProcesso(new Processo (8, 2, 0));
+        ArrayList<Io> x = new ArrayList<Io>(), y = new ArrayList<Io>();
+        x.add(new Io(1));
+        x.add(new Io(9));
+        novoProcesso(new Processo (14, 6, x, 1));
+        y.add(new Io(4));
+        novoProcesso(new Processo (22, 4, y, 2));
+        //Fim de inserção direta
         while(menu != 7){
             menu = Integer.parseInt(JOptionPane.showInputDialog(null, "Escolha a opção: \n"
                     + "1 - Inserir novo Processo\n"
@@ -96,25 +106,35 @@ public class Main {
                     //Alterar quantum
                     break;
                 case 6:
-                    ready = fila;
+                    ready = clonar(fila);
                     if(ready.isEmpty()){
                         JOptionPane.showMessageDialog(null, "Não há processos para serem simulados!\nAdicione processos e tente novamente.");
                     } else {
                         gnomeSort(ready, 0, 0, true);
                         int ponteiro = 0, tempo = 0;
-                        while(ready != null){
-                            if(ponteiro > ready.size()-1){
-                                ponteiro = 0;
-                            }
-                            p = ready.get(ponteiro);
-                            if(p.getChegada() >= tempo && p.getChegada() <= (tempo+quantum)){
-                                System.out.println("Iniciando em: " + (tempo+p.getChegada()));
-                                int momento = getMomentoIos(p.getIo(), tempo, quantum);
-                                if(momento >= 0){
-                                    tempo = tempo + momento/8;
-                                }
-                            }
+                        while(tempo < ready.get(0).getChegada()){
+                            tempo++;
                         }
+                        while(!ready.isEmpty()){
+                            for(Processo processo:ready){
+                                int maxTempo = (processo.getDuracao() > (quantum)?quantum:processo.getDuracao());
+                                boolean io = false;
+                                int startAt = tempo;
+                                Io holder = verificaIO(processo, maxTempo);
+                                if(holder != null){
+                                    tempo += holder.getMomento();
+                                } else {
+                                    tempo += maxTempo;
+                                }
+                                processo.processado(quantum);                                
+                                System.out.println("Tempo inicial: " + startAt + "\n Tempo final: " + tempo);
+                                /*if(processo.getDuracao() <= 0){
+                                    ready.remove(processo);
+                                }*/
+                            }
+                            resetandoLista(ready); // A função principal é excluir qualquer processo cuja duração seja 0, removendo da lista
+                        }
+                        
                     }
                     break;
                 case 7:
@@ -122,6 +142,36 @@ public class Main {
                     break;
             }
         }
+    }
+    
+    public static ArrayList<Processo> clonar(ArrayList<Processo> list) {
+    ArrayList<Processo> clone = new ArrayList<Processo>(list.size());
+    for(Processo item: list){
+        Processo p = item.clone();
+        p.setIo(item.cloneIO());
+        clone.add(p);
+        
+    }
+    return clone;
+}
+    
+    public static void resetandoLista(ArrayList<Processo> p){
+        Iterator<Processo> i = p.iterator();
+        while(i.hasNext()){
+            if(i.next().getDuracao() <= 0){
+                i.remove();
+            }
+        }
+    }
+    
+    public static Io verificaIO(Processo p, int maxTempo){
+        int i = 0;
+            Io holder = p.buscaIO(maxTempo);
+            if(holder != null){
+                p.getIo().remove(holder);
+                return holder;
+            }
+        return null;
     }
     
     public static String retornarIOs(Processo p){

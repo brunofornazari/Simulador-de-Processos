@@ -1,8 +1,9 @@
 package workStation;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 
-public class Processo {
+public class Processo implements Cloneable {
     private int pId;
     private int duracao;
     private int chegada;
@@ -20,6 +21,43 @@ public class Processo {
         duracao = _duracao;
         chegada = _chegada;
         io = new ArrayList<>();
+    }
+    
+    @Override
+    public Processo clone(){
+        try{
+            Processo p = (Processo) super.clone();
+            return (Processo) p;
+        } catch(CloneNotSupportedException e){
+            System.out.println("Erro ao clonar objeto");
+            return this;
+        }
+    }
+    
+    public ArrayList<Io> cloneIO(){
+        ArrayList<Io> _io = new ArrayList<Io>();
+        Iterator<Io> i = io.iterator();
+        while(i.hasNext()){
+            _io.add(i.next().clone());
+        }
+            return _io;
+    }
+    
+    public void processado(int quantum){
+        duracao -= quantum;
+        for(Io i: io){
+            i.setMomento(i.getMomento()-quantum);
+        }
+    }
+    
+    public Io buscaIO(int quantum){
+        int momento = 0;
+        for(Io i: io){
+            if(i.getMomento() >= momento && i.getMomento() < quantum){
+                return i;
+            }
+        }
+        return null;
     }
     
     public boolean addIO(Io quando){
