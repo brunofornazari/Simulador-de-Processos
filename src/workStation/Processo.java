@@ -22,6 +22,10 @@ public class Processo implements Cloneable {
         chegada = _chegada;
         io = new ArrayList<>();
     }
+    public void alterarProcesso(int _d, int _c) {
+        duracao = _d;
+        chegada = _c;
+    }
     
     @Override
     public Processo clone(){
