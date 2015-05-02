@@ -55,27 +55,36 @@ public class Main {
                                + "\n8 - ▒"
                                + "\n9 - ❐").charAt(0);
                        switch(symbol) {
-                           case 1:
+                           case '1':
                                p.setGraphic('□');
                                break;
-                           case 2:
+                           case '2':
                                p.setGraphic('■');
-                           case 3:
+                               break;
+                           case '3':
                                p.setGraphic('☰');
-                           case 4:
+                               break;
+                           case '4':
                                p.setGraphic('☲');
-                           case 5:
+                               break;
+                           case '5':
                                p.setGraphic('☱');
-                           case 6:
+                               break;
+                           case '6':
                                p.setGraphic('░');
-                           case 7:
+                               break;
+                           case '7':
                                p.setGraphic('▓');
-                           case 8:
+                               break;
+                           case '8':
                                p.setGraphic('▒');
-                           case 9:
+                               break;
+                           case '9':
                                p.setGraphic('❐');
+                               break;
                            default:
                                p.setGraphic(symbol); 
+                               break;
                        }
                        while(subMenu != 6 && subMenu != 5){
                            subMenu = Integer.parseInt(JOptionPane.showInputDialog("Processo: " + p.getpId() + "\nEntre com a opção:\n"
@@ -131,7 +140,8 @@ public class Main {
                     for(Processo processo:fila){
                         processos += "Processo: P" + processo.getpId() + "\n"
                                 + "Duração: [" + processo.getDuracao() + "] - Chegada: [" + processo.getChegada() + "]\n"
-                                + "I/O's: " + retornarIOs(processo.getIo());
+                                + "I/O's: " + retornarIOs(processo.getIo())
+                                + "Símbolo: " + processo.getGraphic() + "\n";
                     }
                     JOptionPane.showMessageDialog(null, processos);
                     break;
