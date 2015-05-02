@@ -14,7 +14,6 @@ public class Registro {
     private int fim;
     private int processo;
     private boolean io;
-    private int tme;
     
     public Registro(int _inicio, int _processo, int _fim, boolean _io){
         inicio = _inicio;
@@ -79,21 +78,5 @@ public class Registro {
      */
     public void setIo(boolean io) {
         this.io = io;
-    }
-
-    /**
-     * @return the tme
-     */
-    public int getTme() {
-        return tme;
-    }
-
-    /**
-     * @param tme the tme to set
-     */
-    public void setTme(int tme) {
-        this.tme = tme;
-    }
-    
-    
+    }   
 }
