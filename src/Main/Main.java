@@ -1,13 +1,17 @@
 package Main;
 
+
 import java.util.ArrayList;
 import java.util.Iterator;
+
 import workStation.*;
 import javax.swing.JOptionPane;
+
 public class Main {
     static ArrayList<Processo> fila = new ArrayList<Processo>();
-    static int quantum;
     static ArrayList<Processo> ready = new ArrayList<Processo>();
+    static Gerenciador_Registros registros = new Gerenciador_Registros();
+    static int quantum;
     public static void main(String[] args) {
         int menu = 0;
         int contP = 3;
@@ -111,7 +115,7 @@ public class Main {
                         JOptionPane.showMessageDialog(null, "Não há processos para serem simulados!\nAdicione processos e tente novamente.");
                     } else {
                         gnomeSort(ready, 0, 0, true);
-                        int ponteiro = 0, tempo = 0;
+                        int tempo = 0;
                         while(tempo < ready.get(0).getChegada()){
                             tempo++;
                         }
@@ -122,18 +126,39 @@ public class Main {
                                 int startAt = tempo;
                                 Io holder = verificaIO(processo, maxTempo);
                                 if(holder != null){
+                                    io = true;
                                     tempo += holder.getMomento();
                                 } else {
                                     tempo += maxTempo;
                                 }
                                 processo.processado(quantum);                                
-                                System.out.println("Tempo inicial: " + startAt + "\n Tempo final: " + tempo);
                                 /*if(processo.getDuracao() <= 0){
                                     ready.remove(processo);
                                 }*/
+                                registros.add(new Registro(startAt, processo.getpId(), tempo, io));
                             }
                             resetandoLista(ready); // A função principal é excluir qualquer processo cuja duração seja 0, removendo da lista
                         }
+                        /*
+                        final JFrame f = new JFrame("Teste");
+                        f.setSize(600,400);
+                        f.setVisible(true);
+                        final JPanel pane = new JPanel();
+                        
+                        JButton btn = new JButton("Clicar");
+                        pane.add(btn);
+                        btn.addActionListener(new ActionListener(){
+                            public void actionPerformed(ActionEvent e){
+                                JPanel cc = new JPanel();
+                                cc.add(new JLabel("Olha, funciona"));
+                                f.add(cc);
+                                pane.setVisible(false);
+                            }
+                        });
+                        
+                        f.add(pane);
+                        JOptionPane.showMessageDialog(f, "Objeto");
+                        Reformular toda a primeira parte do menu?*/
                         
                     }
                     break;
