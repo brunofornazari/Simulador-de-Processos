@@ -77,9 +77,11 @@ public class Main {
                                    break;
                                case 4:
                                    //Alterar processo, criar método para evitar alongar demais o código
+                                   alterarProcesso(p);
                                    break;
                                case 5:
                                    //Excluir processo, criar método para evitar alongar demais o código e repetições
+                                   removerProcesso(p);
                                    break;
                                case 6:
                                    fila.add(p);
@@ -97,13 +99,16 @@ public class Main {
                     JOptionPane.showMessageDialog(null, processos);
                     break;
                 case 3:
-                    //Alterar processo, criar método para evitar alongar demais o código
+                    int chave1 = Integer.parseInt(JOptionPane.showInputDialog("Entre com a ID do processo que você deseja alterar."));
+                    alterarProcesso(fila, chave1);
                     break;
                 case 4:
-                    //Excluir processo, criar método para evitar alongar demais o código e repetições
+                    int chave2 = Integer.parseInt(JOptionPane.showInputDialog("Entre com a ID do processo que você deseja remover."));
+                    removerProcesso(fila, chave2);
                     break;
                 case 5:
                     //Alterar quantum
+                    //quantum = Integer.parseInt(JOptionPane.showInputDialog("Entre com o novo valor do Quantum"));
                     break;
                 case 6:
                     ready = clonar(fila);
@@ -239,5 +244,44 @@ public class Main {
     
     public static void novoProcesso(Processo p){
         fila.add(p);
+    }
+    
+    public static boolean alterarProcesso(Processo p) {
+        p.alterarProcesso(Integer.parseInt(JOptionPane.showInputDialog("\nA sua duração atual é: " + p.getDuracao() + "\nEntre com a nova duração.")),
+                Integer.parseInt(JOptionPane.showInputDialog("\nA atual chegada é: " + p.getChegada() + "\nEntre com a nova chegada.")));
+        return true;
+    }
+    
+    public static boolean alterarProcesso(ArrayList <Processo> p, int chave) {
+        if (p.isEmpty()) {
+            return false;
+        } else {
+            for (Processo o : p) {
+                if (o.getpId() == chave) {
+                    alterarProcesso(o);
+                }
+            }
+        }
+        return false;
+    }
+    
+    public static boolean removerProcesso(Processo p) {
+        file.remove(p);
+        String r = "Processo apagado com sucesso!";
+        JOptionPane.showMessageDialog(null, r);
+        return true;
+    }
+    
+    public static boolean removerProcesso(ArrayList <Processo> p, int chave) {
+        if (p.isEmpty()) {
+            return false;
+        } else {
+            for (Processo o : p) {
+                if (o.getpId() == chave) {
+                    removerProcesso(o);
+                }
+            }
+            return false;
+        }
     }
 }
