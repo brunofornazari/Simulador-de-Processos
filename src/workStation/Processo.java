@@ -8,6 +8,7 @@ public class Processo implements Cloneable {
     private int duracao;
     private int chegada;
     private ArrayList<Io> io;
+    private char graphic;
     
     public Processo(int _duracao, int _chegada, ArrayList<Io> _io, int _pId){
         pId = _pId;
@@ -16,12 +17,29 @@ public class Processo implements Cloneable {
         io = _io;
     }
     
+    public Processo(int _duracao, int _chegada, ArrayList<Io> _io, int _pId, char _g){
+        pId = _pId;
+        duracao = _duracao;
+        chegada = _chegada;
+        io = _io;
+        graphic = _g;
+    }
+    
     public Processo(int _duracao, int _chegada, int _pId){
         pId = _pId;
         duracao = _duracao;
         chegada = _chegada;
         io = new ArrayList<>();
     }
+    
+    public Processo(int _duracao, int _chegada, int _pId, char _g){
+        pId = _pId;
+        duracao = _duracao;
+        chegada = _chegada;
+        io = new ArrayList<>();
+        graphic = _g;
+    }
+    
     public void alterarProcesso(int _d, int _c) {
         duracao = _d;
         chegada = _c;
@@ -141,6 +159,20 @@ public class Processo implements Cloneable {
     
     public void setIo(){
         this.io = new ArrayList<Io>();
+    }
+
+    /**
+     * @return the graphic
+     */
+    public char getGraphic() {
+        return graphic;
+    }
+
+    /**
+     * @param graphic the graphic to set
+     */
+    public void setGraphic(char graphic) {
+        this.graphic = graphic;
     }
     
 }
