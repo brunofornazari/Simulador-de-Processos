@@ -4,10 +4,7 @@
  */
 package workStation;
 
-import java.awt.Color;
-import java.awt.Graphics;
 import java.util.ArrayList;
-import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
 /**
@@ -26,13 +23,20 @@ public class Gerenciador_Registros {
         registros.add(r);
     }
     
-    public JFrame desenharGant(){
-        JFrame frame = new JFrame(); 
-        frame.setSize(600, 400);
-
-        frame.setBackground(Color.yellow);
-        frame.setVisible(true);
-        return frame;
+    public void imprimirGant(ArrayList<Processo> processos){
+        String impressao = "";
+        for(Processo p:processos){
+            impressao += "P" + p.getpId() + " " + p.getGraphic() + "\n";
+        }
+        impressao += "\n\n\n";
+        for(Registro r:registros){
+            int i = 0;
+            Processo p = processos.get(r.getProcesso());
+            while(i < r.getFim() - r.getInicio()){
+                impressao += p.getGraphic();
+            }
+        }
+        JOptionPane.showMessageDialog(null, impressao);
     }
     
     /**
