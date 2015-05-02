@@ -44,6 +44,39 @@ public class Main {
                                contP);
                        contP++;
                        int subMenu = 0;
+                       char symbol = JOptionPane.showInputDialog("\nEscolha o símbolo do processo"
+                               + "\n1 - □"
+                               + "\n2 - ■"
+                               + "\n3 - ☰"
+                               + "\n4 - ☲"
+                               + "\n5 - ☱"
+                               + "\n6 - ░"
+                               + "\n7 - ▓"
+                               + "\n8 - ▒"
+                               + "\n9 - ❐").charAt(0);
+                       switch(symbol) {
+                           case 1:
+                               p.setGraphic('□');
+                               break;
+                           case 2:
+                               p.setGraphic('■');
+                           case 3:
+                               p.setGraphic('☰');
+                           case 4:
+                               p.setGraphic('☲');
+                           case 5:
+                               p.setGraphic('☱');
+                           case 6:
+                               p.setGraphic('░');
+                           case 7:
+                               p.setGraphic('▓');
+                           case 8:
+                               p.setGraphic('▒');
+                           case 9:
+                               p.setGraphic('❐');
+                           default:
+                               p.setGraphic(symbol); 
+                       }
                        while(subMenu != 6 && subMenu != 5){
                            subMenu = Integer.parseInt(JOptionPane.showInputDialog("Processo: " + p.getpId() + "\nEntre com a opção:\n"
                                    + "1 - Inserir I/O\n"
@@ -82,11 +115,9 @@ public class Main {
                                    }
                                    break;
                                case 4:
-                                   //Alterar processo, criar método para evitar alongar demais o código
                                    alterarProcesso(p);
                                    break;
                                case 5:
-                                   //Excluir processo, criar método para evitar alongar demais o código e repetições
                                    removerProcesso(p);
                                    break;
                                case 6:
@@ -113,7 +144,7 @@ public class Main {
                     removerProcesso(fila, chave);
                     break;
                 case 5:
-                    //Alterar quantum
+                    quantum = Integer.parseInt(JOptionPane.showInputDialog("Entre com o novo quantum."));
                     break;
                 case 6:
                     ready = clonar(fila);
