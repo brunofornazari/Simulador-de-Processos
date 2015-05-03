@@ -19,6 +19,7 @@ public class Main {
         Processo p;
         quantum = Integer.parseInt(JOptionPane.showInputDialog("Entre com o valor do Quantum"));
         //Pacote de inicialiazção direta
+<<<<<<< HEAD
         novoProcesso(new Processo (8, 2, 0, '■'));
         ArrayList<Io> x = new ArrayList<Io>(), y = new ArrayList<Io>();
         x.add(new Io(1));
@@ -26,6 +27,15 @@ public class Main {
         novoProcesso(new Processo (14, 6, x, 1, '▓'));
         y.add(new Io(4));
         novoProcesso(new Processo (22, 4, y, 2, '☰'));
+=======
+        novoProcesso(new Processo (8, 2, 0));
+        ArrayList<Io> x = new ArrayList<Io>(), y = new ArrayList<Io>();
+        x.add(new Io(1));
+        x.add(new Io(9));
+        novoProcesso(new Processo (14, 6, x, 1));
+        y.add(new Io(4));
+        novoProcesso(new Processo (22, 4, y, 2));
+>>>>>>> origin/Colaboradores
         int chave;
         //Fim de inserção direta
         while(menu != 7){
@@ -166,7 +176,10 @@ public class Main {
                         while(tempo < ready.get(0).getChegada()){
                             tempo++;
                         }
+<<<<<<< HEAD
                         String teste = "";
+=======
+>>>>>>> origin/Colaboradores
                         while(!ready.isEmpty()){
                             for(Processo processo:ready){
                                 int maxTempo = (processo.getDuracao() > (quantum)?quantum:processo.getDuracao());
@@ -179,6 +192,7 @@ public class Main {
                                 } else {
                                     tempo += maxTempo;
                                 }
+<<<<<<< HEAD
                                 processo.processado(tempo-startAt);                                
                                 /*if(processo.getDuracao() <= 0){
                                     ready.remove(processo);
@@ -195,6 +209,17 @@ public class Main {
                         }
                         //JOptionPane.showMessageDialog(null, teste);
                         registros.imprimirGant(fila);
+=======
+                                processo.processado(quantum);                                
+                                /*if(processo.getDuracao() <= 0){
+                                    ready.remove(processo);
+                                }*/
+                                registros.add(new Registro(startAt, processo.getpId(), tempo, io));
+                            }
+                            resetandoLista(ready); // A função principal é excluir qualquer processo cuja duração seja 0, removendo da lista
+                        }
+
+>>>>>>> origin/Colaboradores
                         
                     }
                     break;
