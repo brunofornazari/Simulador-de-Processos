@@ -34,6 +34,7 @@ public class Gerenciador_Registros {
             Processo p = processos.get(r.getProcesso());
             while(i < r.getFim() - r.getInicio()){
                 impressao += p.getGraphic();
+                i++;
             }
         }
         JOptionPane.showMessageDialog(null, impressao);
