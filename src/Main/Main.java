@@ -18,8 +18,8 @@ public class Main {
         int contP = 3;
         Processo p;
         quantum = Integer.parseInt(JOptionPane.showInputDialog("Entre com o valor do Quantum"));
-        //Pacote de inicialiazção direta
-<<<<<<< HEAD
+        //Pacote de inicialização direta
+        
         novoProcesso(new Processo (8, 2, 0, '■'));
         ArrayList<Io> x = new ArrayList<Io>(), y = new ArrayList<Io>();
         x.add(new Io(1));
@@ -27,17 +27,9 @@ public class Main {
         novoProcesso(new Processo (14, 6, x, 1, '▓'));
         y.add(new Io(4));
         novoProcesso(new Processo (22, 4, y, 2, '☰'));
-=======
-        novoProcesso(new Processo (8, 2, 0));
-        ArrayList<Io> x = new ArrayList<Io>(), y = new ArrayList<Io>();
-        x.add(new Io(1));
-        x.add(new Io(9));
-        novoProcesso(new Processo (14, 6, x, 1));
-        y.add(new Io(4));
-        novoProcesso(new Processo (22, 4, y, 2));
->>>>>>> origin/Colaboradores
-        int chave;
         //Fim de inserção direta
+        int chave;
+        
         while(menu != 7){
             menu = Integer.parseInt(JOptionPane.showInputDialog(null, "Escolha a opção: \n"
                     + "1 - Inserir novo Processo\n"
@@ -176,10 +168,9 @@ public class Main {
                         while(tempo < ready.get(0).getChegada()){
                             tempo++;
                         }
-<<<<<<< HEAD
-                        String teste = "";
-=======
->>>>>>> origin/Colaboradores
+
+
+
                         while(!ready.isEmpty()){
                             for(Processo processo:ready){
                                 int maxTempo = (processo.getDuracao() > (quantum)?quantum:processo.getDuracao());
@@ -192,35 +183,17 @@ public class Main {
                                 } else {
                                     tempo += maxTempo;
                                 }
-<<<<<<< HEAD
+
                                 processo.processado(tempo-startAt);                                
-                                /*if(processo.getDuracao() <= 0){
-                                    ready.remove(processo);
-                                }*/
-                                int xx = 0;
-                                while(xx < tempo - startAt){
-                                    teste += processo.getGraphic();
-                                    xx++;
-                                }
+
                                 registros.add(new Registro(startAt, processo.getpId(), tempo, io));
-                                //System.out.println("P" + processo.getpId() + " Duração: " + processo.getDuracao() + "\n");
-                            }
-                            resetandoLista(ready); // A função principal é excluir qualquer processo cuja duração seja 0, removendo da lista
-                        }
-                        //JOptionPane.showMessageDialog(null, teste);
-                        registros.imprimirGant(fila);
-=======
-                                processo.processado(quantum);                                
-                                /*if(processo.getDuracao() <= 0){
-                                    ready.remove(processo);
-                                }*/
-                                registros.add(new Registro(startAt, processo.getpId(), tempo, io));
+
                             }
                             resetandoLista(ready); // A função principal é excluir qualquer processo cuja duração seja 0, removendo da lista
                         }
 
->>>>>>> origin/Colaboradores
-                        
+                        registros.imprimirGant(fila);
+                   
                     }
                     break;
                 case 7:
@@ -229,6 +202,7 @@ public class Main {
             }
         }
     }
+    
     
     public static ArrayList<Processo> clonar(ArrayList<Processo> list) {
     ArrayList<Processo> clone = new ArrayList<Processo>(list.size());
