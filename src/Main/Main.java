@@ -15,18 +15,30 @@ public class Main {
     static int quantum;
     public static void main(String[] args) {
         int menu = 0;
-        int contP = 3;
+        int contP = 0;
         Processo p;
         quantum = Integer.parseInt(JOptionPane.showInputDialog("Entre com o valor do Quantum"));
         //Pacote de inicialização direta
+        ArrayList<Io> x = new ArrayList<Io>(), y = new ArrayList<Io>(), z = new ArrayList<Io>(), w = new ArrayList<Io>();
+        x.add(new Io(2));
+        x.add(new Io(4));
+        x.add(new Io(6));
+        x.add(new Io(8));
+        novoProcesso(new Processo (9, 10, x, contP, '■'));
+        contP++;
+        y.add(new Io(5));
         
-        novoProcesso(new Processo (8, 2, 0, '■'));
-        ArrayList<Io> x = new ArrayList<Io>(), y = new ArrayList<Io>();
-        x.add(new Io(1));
-        x.add(new Io(9));
-        novoProcesso(new Processo (14, 6, x, 1, '▓'));
-        y.add(new Io(4));
-        novoProcesso(new Processo (22, 4, y, 2, '☰'));
+        novoProcesso(new Processo (10, 4, y, contP, '▓'));
+        contP++;
+        z.add(new Io(2));
+        novoProcesso(new Processo (5, 0, z, contP, '□'));
+        contP++;
+        w.add(new Io(3));
+        w.add(new Io(6));
+        novoProcesso(new Processo (7, 1, w, contP, '☰'));
+        contP++;
+        novoProcesso(new Processo (2, 17, contP, '░'));
+        contP++;
         //Fim de inserção direta
         int chave;
         
@@ -187,7 +199,7 @@ public class Main {
                                 processo.processado(tempo-startAt);                                
 
                                 addRegistro(new Registro(startAt, processo.getpId(), tempo, io), processo);
-
+                                System.out.println("P" + processo.getpId() + " - " + processo.getDuracao() + "\nTempo Inicio: " + startAt + " - Tempo Fim: " + tempo);
                             }
                             resetandoLista(ready); // A função principal é excluir qualquer processo cuja duração seja 0, removendo da lista
                         }
@@ -278,8 +290,8 @@ public class Main {
                if(io.indexOf(o) != (io.size()-1)){
                    ios += ", ";
                }
-               ios += "\n";
             }
+            ios += "\n";
         } else {
            ios += "Nenhum processo de IO encontrado no processo.\n";
         }
@@ -288,6 +300,9 @@ public class Main {
     
     public static ArrayList<Processo> gnomeSort(ArrayList<Processo> v, int ponteiro, int var, boolean progresso) {
         if(ponteiro >= v.size()-1){
+            for(Processo p:v){
+                System.out.println(p.getChegada() + ", ");
+            }
             return v;
         } else {
             if(progresso){
@@ -300,7 +315,7 @@ public class Main {
             } else {
                 if(var > 0){
                     if(v.get(var).getChegada() < v.get(var-1).getChegada()){
-                        Processo x = v.get(var-1);
+                        Processo x = v.get(var);
                         v.set(var, v.get(var-1));
                         v.set(var-1, x);
                         return gnomeSort(v, ponteiro, var-1, false);

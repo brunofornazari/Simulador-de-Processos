@@ -39,10 +39,11 @@ public class Gerenciador_Registros {
             return 0;
         } else {
             for(Registro r:registros){
-                if(aux.indexOf(r) < 0){
+                if(!aux.contains(r)){
                     aux.add(r);
                 }
             }
+            System.out.println("TME SIZE: " + aux.size());
             return tme/aux.size();
         }
     }
@@ -52,16 +53,28 @@ public class Gerenciador_Registros {
         for(Processo p:processos){
             impressao += "P" + p.getpId() + " " + p.getGraphic() + "\n";
         }
-        impressao += "\n\n\n#### TME: " + gerarTME() + " ####\n\n\n";
+        impressao += "\n\n\n#### TME: " + tme/processos.size() + " ####\n\n\n";
         for(Registro r:registros){
             int i = 0;
-            Processo p = processos.get(r.getProcesso());
+            Processo p = procurarProcesso(processos, r.getProcesso());
             while(i < r.getFim() - r.getInicio()){
-                impressao += p.getGraphic();
+                if(p != null){
+                    impressao += p.getGraphic();
+                }
+                
                 i++;
             }
         }
         JOptionPane.showMessageDialog(null, impressao);
+    }
+    
+    public Processo procurarProcesso(ArrayList<Processo> lista, int chave){
+        for(Processo p:lista){
+            if(p.getpId() == chave){
+                return p;
+            }
+        }
+        return null;
     }
     
     public Registro getLast(int pId){
