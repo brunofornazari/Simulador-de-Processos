@@ -186,7 +186,7 @@ public class Main {
 
                                 processo.processado(tempo-startAt);                                
 
-                                registros.add(new Registro(startAt, processo.getpId(), tempo, io));
+                                addRegistro(new Registro(startAt, processo.getpId(), tempo, io), processo);
 
                             }
                             resetandoLista(ready); // A função principal é excluir qualquer processo cuja duração seja 0, removendo da lista
@@ -203,6 +203,20 @@ public class Main {
         }
     }
     
+    public static void addRegistro(Registro r, Processo p){
+        int tme = 0;
+        if(registros.isEmpty()){
+            registros.add(r, (r.getInicio()-p.getChegada()));
+        } else {
+            Registro aux = registros.getLast(r.getProcesso());
+            if(aux != null){
+                tme += r.getInicio() - aux.getFim();
+            } else {
+                tme = r.getInicio() - p.getChegada();
+            }
+            registros.add(r, tme);
+        }
+    }
     
     public static ArrayList<Processo> clonar(ArrayList<Processo> list) {
     ArrayList<Processo> clone = new ArrayList<Processo>(list.size());

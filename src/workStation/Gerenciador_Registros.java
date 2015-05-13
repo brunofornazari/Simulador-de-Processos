@@ -19,8 +19,32 @@ public class Gerenciador_Registros {
         registros = new ArrayList<Registro>();
     }
     
-    public void add(Registro r){
-        registros.add(r);
+    public void add(Registro r, float tme){
+       registros.add(r);
+       this.tme += tme;
+        
+    }
+    
+    public boolean isEmpty(){
+        if(registros.isEmpty()){
+            return true;
+        } else {
+            return false;
+        }
+    }
+    
+    public float gerarTME(){
+        ArrayList<Registro> aux = new ArrayList<Registro>();
+        if(registros.isEmpty()){
+            return 0;
+        } else {
+            for(Registro r:registros){
+                if(aux.indexOf(r) < 0){
+                    aux.add(r);
+                }
+            }
+            return tme/aux.size();
+        }
     }
     
     public void imprimirGant(ArrayList<Processo> processos){
@@ -28,7 +52,7 @@ public class Gerenciador_Registros {
         for(Processo p:processos){
             impressao += "P" + p.getpId() + " " + p.getGraphic() + "\n";
         }
-        impressao += "\n\n\n";
+        impressao += "\n\n\n#### TME: " + gerarTME() + " ####\n\n\n";
         for(Registro r:registros){
             int i = 0;
             Processo p = processos.get(r.getProcesso());
@@ -38,6 +62,16 @@ public class Gerenciador_Registros {
             }
         }
         JOptionPane.showMessageDialog(null, impressao);
+    }
+    
+    public Registro getLast(int pId){
+        for(int i = registros.size()-1;i >= 0; i--){
+            Registro r = registros.get(i);
+            if(r.getProcesso() == pId){
+                return r;
+            }
+        }
+        return null;
     }
     
     /**
